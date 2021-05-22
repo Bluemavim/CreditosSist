@@ -1,5 +1,6 @@
 package ar.com.ada.creditos;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -105,6 +106,17 @@ public class ABM {
         cliente.setFechaNacimiento(fecha);
 
         ABMCliente.create(cliente);
+
+        Prestamo prestamo = new Prestamo();
+        prestamo.setImporte(new BigDecimal(10000));
+        prestamo.setCliente(cliente);
+        prestamo.setCuotas(5);
+        prestamo.setFecha(new Date);
+        prestamo.setFechaAlta(new Date);
+
+
+
+
 
         /*
          * Si concateno el OBJETO directamente, me trae todo lo que este en el metodo
