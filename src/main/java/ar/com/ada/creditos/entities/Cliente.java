@@ -1,6 +1,5 @@
 package ar.com.ada.creditos.entities;
 
-
 import java.util.Date;
 
 import javax.persistence.*;
@@ -8,6 +7,9 @@ import javax.persistence.*;
 import org.hibernate.annotations.NaturalId;
 
 import ar.com.ada.creditos.excepciones.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente")
@@ -36,7 +38,18 @@ public class Cliente {
 
     }
 
+    //
+    @OneToMany
+    private List<Prestamo> prestamos = new ArrayList<>();
 
+
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
 
     public Cliente() {
     }
