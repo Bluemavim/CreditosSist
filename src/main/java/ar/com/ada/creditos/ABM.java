@@ -17,11 +17,14 @@ public class ABM {
 
     protected ClienteManager ABMCliente = new ClienteManager();
 
+    protected PrestamoManager ABMPrestamo = new PrestamoManager();
+
     public void iniciar() throws Exception {
 
         try {
 
             ABMCliente.setup();
+            ABMPrestamo.setup();
 
             printOpciones();
 
