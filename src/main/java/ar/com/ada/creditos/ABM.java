@@ -111,8 +111,8 @@ public class ABM {
         prestamo.setImporte(new BigDecimal(10000));
         prestamo.setCliente(cliente);
         prestamo.setCuotas(5);
-        prestamo.setFecha(new Date);
-        prestamo.setFechaAlta(new Date);
+        prestamo.setFecha(new Date());
+        prestamo.setFechaAlta(new Date()    );
 
 
 
