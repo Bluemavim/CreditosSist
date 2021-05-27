@@ -7,9 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import ar.com.ada.creditos.entities.*;
+import ar.com.ada.creditos.entities.Cliente;
+import ar.com.ada.creditos.entities.Prestamo;
 import ar.com.ada.creditos.excepciones.*;
-import ar.com.ada.creditos.managers.*;
+import ar.com.ada.creditos.managers.ClienteManager;
+import ar.com.ada.creditos.managers.PrestamoManager;
+
 
 public class ABM {
 
@@ -57,6 +60,14 @@ public class ABM {
 
                     case 5:
                         listarPorNombre();
+                        break;
+
+                    case 6:
+                        darPrestamo();
+                        break;
+
+                    case 7:
+                        listarPrestamo();
                         break;
 
                     default:
@@ -109,18 +120,6 @@ public class ABM {
         cliente.setFechaNacimiento(fecha);
 
         ABMCliente.create(cliente);
-
-        Prestamo prestamo = new Prestamo();
-        prestamo.setImporte(new BigDecimal(10000));
-        prestamo.setCliente(cliente);
-        prestamo.setCuotas(5);
-        prestamo.setFecha(new Date());
-        prestamo.setFechaAlta(new Date()    );
-
-
-
-
-
         /*
          * Si concateno el OBJETO directamente, me trae todo lo que este en el metodo
          * toString() mi recomendacion es NO usarlo para imprimir cosas en pantallas, si
@@ -272,14 +271,52 @@ public class ABM {
         System.out.println(" Fecha Nacimiento: " + fechaNacimientoStr);
     }
 
+    public void mostrarPrestamo(Prestamo prestamo) {
+
+        System.out.print("Id: " + prestamo.getPrestamoId() + " Cliente " + prestamo.getCliente() + " Fecha alta: "
+                + prestamo.getFechaAlta() + " Importe: " + prestamo.getImporte());
+    }
+
+    public void listarPrestamo() {
+        List<Prestamo> todos = ABMPrestamo.buscarPrestamos();
+        for (Prestamo p : todos) {
+            mostrarPrestamo(p);
+        }
+    }
+
+    public void darPrestamo() {
+        System.out.println("Por favor, ingrese el DNI del cliente a quien se le otorgará el préstamo:");
+        int dni = Teclado.nextInt();
+        Cliente clienteEncontrado = ABMCliente.readByDNI(dni);
+        if (clienteEncontrado == null) {
+            System.out.println("Cliente no encontrado.");
+            System.out.println("Por favor, primero ingrese los datos del cliente.");
+            } else {
+                System.out.println("Ingrese los datos correspondientes al préstamo del cliente " + clienteEncontrado.getNombre() + ".");
+                Prestamo prestamo = new Prestamo();
+                System.out.println("Ingrese el importe:");
+                prestamo.setImporte(new BigDecimal(Teclado.nextInt()));
+                System.out.println("Ingrese cantidad de cuotas:");
+                prestamo.setCuotas(Teclado.nextInt());
+                prestamo.setFecha(new Date());
+                prestamo.setFechaAlta(new Date());
+                prestamo.setCliente(clienteEncontrado);
+                ABMPrestamo.create(prestamo);
+                System.out.println("Se otorgó el prestamo" + prestamo.getPrestamoId() + "al cliente " + clienteEncontrado.getNombre() + ".");   
+            }
+
+        }
+
     public static void printOpciones() {
         System.out.println("=======================================");
         System.out.println("");
         System.out.println("1. Para agregar un cliente.");
         System.out.println("2. Para eliminar un cliente.");
         System.out.println("3. Para modificar un cliente.");
-        System.out.println("4. Para ver el listado.");
+        System.out.println("4. Para ver el listado de clientes.");
         System.out.println("5. Buscar un cliente por nombre especifico(SQL Injection)).");
+        System.out.println("6. Para agregar un préstamo.");
+        System.out.println("7. Para ver el listado de préstamos otorgados.");
         System.out.println("0. Para terminar.");
         System.out.println("");
         System.out.println("=======================================");
