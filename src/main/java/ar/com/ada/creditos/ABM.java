@@ -16,11 +16,17 @@ import ar.com.ada.creditos.managers.PrestamoManager;
 
 public class ABM {
 
+
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+
     public static Scanner Teclado = new Scanner(System.in);
 
     protected ClienteManager ABMCliente = new ClienteManager();
 
     protected PrestamoManager ABMPrestamo = new PrestamoManager();
+
+    //protected CancelacionManager ABMCancelacion = new CancelacionManager();
 
     public void iniciar() throws Exception {
 
@@ -28,6 +34,7 @@ public class ABM {
 
             ABMCliente.setup();
             ABMPrestamo.setup();
+            //ABMCancelacion.setup();
 
             printOpciones();
 
@@ -83,13 +90,15 @@ public class ABM {
 
             // Hago un safe exit del manager
             ABMCliente.exit();
+            ABMPrestamo.exit();
+            //ABMCancelacion.exit();
 
         } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("Que lindo mi sistema,se rompio mi sistema");
+            System.out.println("Se encontró un error en el sistema.");
             throw e;
         } finally {
-            System.out.println("Saliendo del sistema, bye bye...");
+            System.out.println("Saliendo...");
 
         }
 
@@ -310,14 +319,22 @@ public class ABM {
     public static void printOpciones() {
         System.out.println("=======================================");
         System.out.println("");
-        System.out.println("1. Para agregar un cliente.");
-        System.out.println("2. Para eliminar un cliente.");
-        System.out.println("3. Para modificar un cliente.");
-        System.out.println("4. Para ver el listado de clientes.");
-        System.out.println("5. Buscar un cliente por nombre especifico(SQL Injection)).");
-        System.out.println("6. Para agregar un préstamo.");
-        System.out.println("7. Para ver el listado de préstamos otorgados.");
-        System.out.println("0. Para terminar.");
+        System.out.println(ANSI_CYAN
+        + "1. Para agregar un cliente.");
+        System.out.println(ANSI_CYAN
+        + "2. Para eliminar un cliente.");
+        System.out.println(ANSI_CYAN
+        + "3. Para modificar un cliente.");
+        System.out.println(ANSI_CYAN
+        + "4. Para ver el listado de clientes.");
+        System.out.println(ANSI_CYAN
+        + "5. Buscar un cliente por nombre específico(SQL Injection)).");
+        System.out.println(ANSI_CYAN
+        + "6. Para agregar un préstamo.");
+        System.out.println(ANSI_CYAN
+        + "7. Para ver el listado de préstamos otorgados.");
+        System.out.println(ANSI_CYAN
+        + "0. Para terminar.");
         System.out.println("");
         System.out.println("=======================================");
     }
