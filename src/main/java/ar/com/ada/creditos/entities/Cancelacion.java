@@ -13,7 +13,7 @@ public class Cancelacion {
     
     @Column(name="cancelacion_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int prestamoId;
+    private int cancelacionId;
 
     @Column(name="prestamo_id")
     private Date fecha;
@@ -24,7 +24,7 @@ public class Cancelacion {
 
 
     @ManyToOne // los JoinColumn van donde está la FK
-    @JoinColumn(name = "cliente_id", referencedColumnName = "cliente_id")
+    @JoinColumn(name = "prestamo_id", referencedColumnName = "prestamo_id")
     private Cliente cliente;
     
 }
